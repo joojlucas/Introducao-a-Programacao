@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define M 10
+#define N 10
+#define acessaMatriz(a, i,numcols, j) ((a)[(i) * numcols + (j)])
+/*
+Esse programa e uma versao de solucao do problema ler-imprimir-matriz que usa alocacao dinamica de memória
+*/
+
+int * alocaMatriz(int m,int n){
+	//Trata um vetor como se fosse uma matriz. Aloca um vetor de n*m int
+	int* mat=(int*)calloc(m*n,sizeof(int));
+	if(!mat){
+		free(mat);
+		return(NULL);
+	}
+	return(mat);
+}
+
+
+int main() {
+	int* A;
+	int m, n, i, j;
+	
+	do{
+		scanf("%d", &m);
+	}while(m<1 || m>M);	
+	do{
+		scanf("%d", &n);
+	}while(n<1 || n>N);
+	A=alocaMatriz(m,n);
+	if(A){ 
+		for( i=0; i<m; i++)
+			for( j=0; j<n; j++)
+				scanf("%d", &acessaMatriz(A,i,n,j));
+		for( i=0; i<m; i++) {
+			printf("linha %d: ", i+1);
+			for( j=0; j<n; j++) {
+				if(j>0) printf(",");
+				printf("%d",acessaMatriz(A,i,n,j));
+			}
+			printf("\n");
+		}
+		free(A);
+	}
+	return 0;
+}
